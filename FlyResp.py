@@ -229,7 +229,7 @@ wake_sleep_mr_df = get_wake_sleep_mr_df(df, colnames)
 
 # Mean Hourly Sleep MR
 def get_mean_hourly_sleep_mr_df(df, sleep_profile_df, colnames):
-    mr_hourly = sleep_profile_df.iloc[:,1::2]
+    mr_hourly = sleep_profile_df.iloc[:,1::3]
     mr_hourly.isNight = pd.Series([x > len(mr_hourly)/2-1 for x in range(len(mr_hourly))]) 
     mean_hourly_list = [[x, ] for x in colnames]
     for i in range(len(colnames)):
