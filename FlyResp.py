@@ -149,7 +149,7 @@ all_night_bouts_df = pd.DataFrame(all_bouts_night_list).transpose()
 # Get sleep profiles
 def get_sleep_profile(df, resp_colnum, sleep_colnum):
     """
-    Returns a list of tuples with sum of metabolic rate and the percentage sleep for each hour in the 24 hour window
+    Returns a list of tuples with sum of metabolic rate and the percentage sleep and total beam breaks for each hour in the 24 hour window
     """
     fly1_sleep = df.iloc[:,sleep_colnum]
     fly1_resp = df.iloc[:,resp_colnum]
@@ -162,7 +162,7 @@ def get_sleep_profile(df, resp_colnum, sleep_colnum):
             if i == 0:
                 num_sleep_blocks += 1
         sleep_avg = num_sleep_blocks / 12 * 100
-        hourly_resp_sleep.append((resp.sum(), sleep_avg))
+        hourly_resp_sleep.append((resp.sum(), sleep_avg, sleep.sum()))
     return hourly_resp_sleep
 
 def make_sleep_profile_dict(df):
@@ -178,6 +178,7 @@ def make_sleep_profile_dict(df):
         sleep_profile = get_sleep_profile(df, resp_colnum, sleep_colnum)
         sleep_profile_dict[df.columns[sleep_colnum] + ' MR Sum'] = [x[0] for x in sleep_profile] #name of genotype is header of sleep column
         sleep_profile_dict[df.columns[sleep_colnum] + ' Avg Sleep'] = [x[1] for x in sleep_profile]
+        sleep_profile_dict[df.columns[sleep_colnum] + ' Beam Breaks'] = [x[2] for x in sleep_profile]
         resp_colnum+=1
         sleep_colnum+=1
     return sleep_profile_dict
@@ -190,6 +191,7 @@ def make_sleep_profile_colnames(df):
     for i in range(11,16):
         colnames.append(df.columns[i] + ' MR Sum')
         colnames.append(df.columns[i] + ' Avg Sleep')
+        colnames.append(df.columns[i] + ' Beam Breaks')
     return colnames
 
 sleep_profile_dict = make_sleep_profile_dict(df)
