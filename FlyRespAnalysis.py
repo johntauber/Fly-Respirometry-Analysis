@@ -126,10 +126,10 @@ def get_day_night_bouts(df, resp_colnum, activity_colnum):
             resp_bouts_day.append(list(df.iloc[:,resp_colnum])[i[0]:i[1]])
 
     if not resp_bouts_day:
-        resp_bouts_day = ['none']
+        resp_bouts_day = [['none']]
 
     if not resp_bouts_night:
-        resp_bouts_night = ['none']
+        resp_bouts_night = [['none']]
 
     return resp_bouts_day, resp_bouts_night
 
